@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>simulator</title>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+      	#version 300 es
+           in vec3 vPosition;
+           uniform mat4 modelViewMatrix;
+           uniform mat4 projectionMatrix;
+           uniform mat4 rotationMatrix;
+           out vec4 fcolor;
+
+           void main(void) {
+			gl_PointSize = 2.0;			
+			
+			gl_Position = projectionMatrix * rotationMatrix * modelViewMatrix * vec4(vPosition, 1.0);
+			
+			if(vPosition.y < 0.0){
+				fcolor = vec4(0.0, 0.0, 1.0, 1.0);
+			}
+			if(vPosition.y > 0.0 && vPosition.y < 0.5){
+				fcolor = vec4(0.0, 1.0, 0.0, 1.0);
+			}
+			if(vPosition.y > 0.5 && vPosition.y < 1.5){
+				fcolor = vec4(165.0/255.0, 42.0/255.0, 42.0/255.0, 1.0);
+			}
+			else{
+				fcolor = vec4(1.0, 1.0, 1.0, 1.0);
+			}
+		}
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+      #version 300 es
+          precision highp float;
+          in vec4 fcolor;
+          out vec4 fColor;
+
+              void main()
+              {
+				fColor = fcolor;
+              }
+    </script>
+
+    <script src="vars.js"></script>
+    <script src="initShadersES6.js"></script>
+    <script src="MVES6.js"></script>
+    <script src="simulator.js"></script>
+    <script src="eventhandler.js"></script>
+    <script src="https://unpkg.com/mathjs@9.5.0/lib/browser/math.js"></script>
+    <script type="text/javascript" src="simulator.js"></script>
+    <script src="http://joeiddon.github.io/perlin/perlin.js"></script>
+  </head>
+
+  <body>
+    <canvas id="gl-canvas" width="512" height="512">
+      Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+  </body>
+</html>
